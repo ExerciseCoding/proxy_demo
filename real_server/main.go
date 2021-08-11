@@ -64,6 +64,7 @@ func main(){
 	rs2 := &RealServer{Addr: "127.0.0.1:2004"}
 	rs2.Run()
 
+
 	//监听关闭服务
 	quit := make(chan os.Signal)
 	signal.Notify(quit,syscall.SIGINT,syscall.SIGTERM)
