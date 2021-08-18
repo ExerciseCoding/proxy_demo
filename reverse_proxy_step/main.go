@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -58,8 +57,9 @@ func NewSingleHostReverseProxy(target *url.URL) *httputil.ReverseProxy {
 		}
 	}
 	modifyFunc := func(res *http.Response) error {
-		if res.StatusCode != 200 {
-			return errors.New("error statusCode")
+		if res.StatusCode == 200 {
+			fmt.Println(res.StatusCode)
+			//return errors.New("error statusCode")
 			oldPayload, err := ioutil.ReadAll(res.Body)
 			if err != nil {
 				return err
@@ -68,7 +68,9 @@ func NewSingleHostReverseProxy(target *url.URL) *httputil.ReverseProxy {
 			res.Body = ioutil.NopCloser(bytes.NewBuffer(newPayLoad))
 			res.ContentLength = int64(len(newPayLoad))
 			res.Header.Set("Content-Length", fmt.Sprint(len(newPayLoad)))
+			fmt.Println(res.Body)
 		}
+		fmt.Println("非200",res.StatusCode)
 		return nil
 	}
 	errorHandler := func(res http.ResponseWriter, req *http.Request, err error) {
