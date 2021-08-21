@@ -1,5 +1,4 @@
 package load_balance
-
 import (
 	"errors"
 	"fmt"
@@ -7,7 +6,9 @@ import (
 	"testing"
 	"time"
 )
-
+/**
+随机负载均衡实现
+*/
 type RandomBalance struct {
 	curIndex int
 	rss []string
