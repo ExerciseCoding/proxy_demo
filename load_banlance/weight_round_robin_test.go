@@ -1,4 +1,4 @@
-package load_balance
+package load_banlance
 
 import (
 	"errors"

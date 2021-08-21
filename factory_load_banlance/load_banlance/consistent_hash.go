@@ -1,4 +1,4 @@
-package load_balance
+package load_banlance
 
 import (
 	"errors"
@@ -15,14 +15,15 @@ type UInt32Slice []uint32
 
 type Hash func(data []byte) uint32
 type ConsistentHashBanlance struct {
-	mux sync.RWMutex
-	hash Hash
-	replicas int //负载因子
-	keys UInt32Slice // 已排序的节点hash切片
-	hashMap map[uint32]string //节点哈希和key的map,键是hash值，值是节点key
+	mux      sync.RWMutex
+	hash     Hash
+	replicas int               //负载因子
+	keys     UInt32Slice       // 已排序的节点hash切片
+	hashMap  map[uint32]string //节点哈希和key的map,键是hash值，值是节点key
 
 }
 // UInt32Slice是自定义类型，要使用sort.Sort需要实现Len,Less,Swap三个方法
+
 func(s UInt32Slice) Len() int {
 	return len(s)
 }
@@ -34,8 +35,8 @@ func (s UInt32Slice) Swap(i, j int) {
 	s[i],s[j] = s[j],s[i]
 }
 
-// 初始化hash环
-func NewConsistantHashBanlance( replicas int, fn Hash)*ConsistentHashBanlance{
+// NewConsistantHashBanlance 初始化hash环
+func NewConsistantHashBanlance( replicas int, fn Hash)*ConsistentHashBanlance {
 	m := &ConsistentHashBanlance{
 		hash: fn,
 		replicas: replicas,

@@ -1,9 +1,9 @@
-package load_balance
+package load_banlance
+
 import (
 	"errors"
 	"fmt"
 	"math/rand"
-	"testing"
 	"time"
 )
 /**
@@ -34,15 +34,6 @@ func (r *RandomBalance) Next()string{
 	return r.rss[r.curIndex]
 }
 
-func TestRandomBalance(t *testing.T){
-	ipaddr := "127.0.0.1"
-	ipaddr1 := "168.172.1.3"
-	rss := []string{ipaddr,ipaddr1}
-
-	b := &RandomBalance{
-		curIndex: 0,
-		rss: rss,
-	}
-	index := b.Next()
-	fmt.Println(index)
+func (r *RandomBalance) Get(key string)(string, error){
+	return r.Next(),nil
 }

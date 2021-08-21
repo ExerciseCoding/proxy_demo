@@ -1,4 +1,4 @@
-package load_balance
+package load_banlance
 
 import "errors"
 
@@ -12,7 +12,7 @@ type RoundRobinBalance struct {
 	rss []string
 }
 
-func (r *RoundRobinBalance) Add(params []string)error{
+func (r *RoundRobinBalance) Add(params ...string)error{
 	if len(params) == 0{
 		return errors.New("param len 1 at least")
 	}
@@ -32,4 +32,8 @@ func (r *RoundRobinBalance) Next()string{
 	curAddr := r.rss[r.curIndex]
 	r.curIndex = (r.curIndex+1) % lens
 	return curAddr
+}
+
+func (r *RoundRobinBalance) Get(key string)(string,error){
+	return r.Next(),nil
 }
